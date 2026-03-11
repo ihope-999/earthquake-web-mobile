@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es2022",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "./dist",  
+    "rootDir": "./src",  
+    "strict": true,
+    "skipLibCheck": true,
+  },
+  "include": ["./src/**/*", "mobileandroid/src/getShelters.ts"]
+}
