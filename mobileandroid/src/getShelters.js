@@ -1,15 +1,26 @@
+import { MathUtils } from "./MathUtils";
 import axios from "axios";
-export async function getNearbyShelters(lat, lon, cityCode) {
-    const response = await axios.get(`LINKWILLBEGIVENLATER`);
-    if (!response.data.features) {
-        console.log("No shelters found");
-        return [];
+export async function getNearbyShelters(lat, lon) {
+    const query = `[out:json][timeout:30];
+(
+  node["amenity"="shelter"](around:10000,${lat},${lon});
+  node["emergency"="assembly_point"](around:5000,${lat},${lon});
+  node["disaster"="evacuation_point"](around:10000,${lat},${lon});
+);out;`;
+    const response = await axios.get(`https://overpass.kumi.systems/api/interpreter?data=${encodeURIComponent(query)}`);
+    if (response.data.elements.length === 0) {
+        console.log("No shelters found!");
     }
-    return response.data.features.map((shelter) => ({
-        id: shelter.properties["共通ID"],
-        name: shelter.properties["施設・場所名"],
-        lat: shelter.geometry.coordinates[1],
-        lon: shelter.geometry.coordinates[0],
-        distnaceToUser: 0
-    }));
+    const allShelters = response.data.elements.map((shelter) => {
+        return ({
+            id: shelter.id.toString(),
+            name: shelter.tags?.name || "Shelter name is unknown",
+            lat: shelter.lat,
+            lon: shelter.lon,
+            distanceToUser: MathUtils.getDistanceKM(lat, lon, shelter.lat, shelter.lon)
+        });
+    });
+    console.log(`Shelters found: ${allShelters.length}`);
+    allShelters.forEach(shelter => console.log(`Shelter name: ${shelter.name}`));
+    return allShelters.sort((a, b) => a.distanceToUser - b.distanceToUser);
 }

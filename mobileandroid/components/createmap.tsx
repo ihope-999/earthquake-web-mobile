@@ -1,4 +1,3 @@
-
 import * as EarthquakeModule from "../src/getEarthquakes";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";

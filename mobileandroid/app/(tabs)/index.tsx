@@ -9,7 +9,7 @@ import { Link } from 'expo-router';
 import { getRecentEarthquake } from '../../../src/getEarthquakes';
 import { P2PEarthquake } from '../../../src/interface';
 
-import CreateMap from "@/components/cretemap"
+import CreateMap from "@/components/createmap"
 import React, { useEffect, useState } from 'react';
 
 export default function HomeScreen() {
