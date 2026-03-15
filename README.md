@@ -1,26 +1,36 @@
 # earthquake-web-mobile
 ongoing project.
 
-# Project Attribution and License
+## Project Attribution and License
 
-## Code
-All TypeScript code in this repository is licensed under the [MIT License](https://opensource.org/licenses/MIT).  
-You are free to use, copy, modify, and distribute this code under the terms of the MIT License.
+### Code
+All TypeScript code in this repository is licensed under the **MIT License**. You are free to use, copy, modify, and distribute this code under the terms of the MIT License.
 
-## Libraries
-- **Axios** is used under the [MIT License](https://github.com/axios/axios/blob/master/LICENSE) and can be freely used in this project.
+### Libraries
+- **Axios** — MIT License
+- **React Native Maps** — MIT License
+- **React Native / Expo** — MIT License
 
-## Data Sources
-This project uses routing and shelter data from the following sources:
+### Data Sources
 
-1. **OSRM (Open Source Routing Machine)**  
-   - Routing requests via the public demo API at `https://router.project-osrm.org/`.  
-   - OSRM is BSD-licensed, and its use in this project is permitted for personal, educational, and low-traffic applications.  
+1. **P2PQuake API**
+   - Earthquake data via `https://api.p2pquake.net/v2/history`
+   - Includes data from the Japan Meteorological Agency (JMA), used under CC BY 4.0.
+   - Free for commercial and non-commercial use.
+
+2. **Japan Meteorological Agency (JMA)**
+   - Historical earthquake and tsunami data (pre-April 4, 2021) © JMA
+   - Used under CC BY 4.0. [JMA Copyright Policy](https://www.jma.go.jp/jma/kishou/info/coment.html)
+
+3. **OSRM (Open Source Routing Machine)**
+   - Routing requests via `https://router.project-osrm.org/`
+   - Licensed under BSD License.
    - For commercial or high-traffic use, hosting your own OSRM instance is recommended.
 
-2. **OpenStreetMap (OSM) data via Overpass API**  
-   - Shelter, emergency, and evacuation point data is obtained via `https://overpass.kumi.systems/api/interpreter`.  
-   - All OSM data is © OpenStreetMap contributors, licensed under the [Open Database License (ODbL)](https://opendatacommons.org/licenses/odbl/1-0/).  
-   - Proper attribution is required when displaying, using, or distributing this data.
+4. **OpenStreetMap via Overpass API**
+   - Shelter and evacuation data via `https://overpass.kumi.systems/api/interpreter`
+   - © OpenStreetMap contributors, licensed under the **Open Database License (ODbL)**.
+   - [OpenStreetMap Copyright](https://www.openstreetmap.org/copyright)
 
-// Shelter and routing data © OpenStreetMap contributors, used via OSRM and Overpass API
+### Disclaimer
+This project is provided as-is with no warranty. Data accuracy is not guaranteed. Do not rely solely on this application in emergency situations.
