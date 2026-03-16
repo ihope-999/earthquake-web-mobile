@@ -1,5 +1,6 @@
+
 import * as EarthquakeModule from "../src/getEarthquakes";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import {GetUserLocation} from "./GetUserLocation";
@@ -9,20 +10,38 @@ import { Text } from "react-native";
 import {getNearbyShelters} from "../src/getShelters" 
 import { Shelter } from "../../src/interface";
 import { getRouteToShelter } from "@/src/getRouteToShelter";
+import {LocationContext} from "./LocationProvider"
 export default function CreateMap() {
+    
+    const {location: manualLocation, setLocation} = useContext(LocationContext);
     const [userCoordinates,setUserCoordinates] =useState<UserCoordinates>();
     const [nearbyEarthquakes,setNearbyEarthquakes] =useState<P2PEarthquake[]>();
     const [nearbyShelters, setNearbyShelters] = useState <Shelter[]>();
     const [closestShelters, setClosestShelters] = useState<Shelter[]>();
     const [routes, setRoutes] = useState<Coordinates[][]>();
-    useEffect(() => {
+    useEffect(
+      () => {
         async function getUserDataQuake(){
-          const setupCoordinates : UserCoordinates = {latitude:35.6762, longitude:139.6503};
+          console.log(`${manualLocation} is manual`);
+
+          let setupCoordinates : UserCoordinates = {latitude:0,longitude:0};
+          if(manualLocation === ""){
+              setupCoordinates = {latitude:35.6762, longitude:139.6503};
+          }
+          else{
+            console.log("The user provided a manual location input!");
+            const parts = manualLocation.split(":");
+            const lat = Number(parts[0]);
+            const lon = Number(parts[1]);
+            if(isNaN(lat) || isNaN(lon)) return;
+            setupCoordinates = {latitude:lat, longitude:lon};
+
+          }
 
 
           //const newCoordinates = await GetUserLocation();
           const shelters = await getNearbyShelters(setupCoordinates.latitude,setupCoordinates.longitude);
-          const found = shelters.slice(0,5);
+          const found = shelters.slice(0,2);
           setRoutes(await Promise.all((found ?? []).map(shelter =>
              (getRouteToShelter(setupCoordinates.latitude,setupCoordinates.longitude,shelter.lat,shelter.lon)
           ))));
@@ -33,7 +52,7 @@ export default function CreateMap() {
           setNearbyEarthquakes(earthquakes);
         };
         getUserDataQuake();
-    })
+    },[manualLocation])
   return (
 
    <>
@@ -41,7 +60,7 @@ export default function CreateMap() {
       {userCoordinates && 
       <MapView
         style={styles.map}
-        initialRegion={{
+        region={{
           latitude: userCoordinates?.latitude || 0,
           longitude: userCoordinates?.longitude || 0,
           latitudeDelta : 2,
