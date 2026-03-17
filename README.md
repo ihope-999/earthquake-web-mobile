@@ -1,5 +1,8 @@
 # earthquake-web-mobile
 ongoing project.
+-Earthquakes are shown on map.
+-Specific sheleters are shown on map.
+-Specific routes to reach the shelters are shown on map.
 
 ## Project Attribution and License
 
