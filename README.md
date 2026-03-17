@@ -3,6 +3,7 @@ ongoing project.
 -Earthquakes are shown on map.
 -Specific sheleters are shown on map.
 -Specific routes to reach the shelters are shown on map.
+-Automatic/Manual location 
 
 ## Project Attribution and License
 
